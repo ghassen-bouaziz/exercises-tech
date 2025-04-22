@@ -229,10 +229,10 @@ const NotificationRow = ({ notification, setNotifications }) => {
     try {
       const { ok } = await api.put(`/notifications/${notification.id}`, { read: true });
       if (!ok) throw new Error('Failed to mark notification as read');
-      setNotifications(prevNotifications => prevNotifications.map(notification =>
-        notification.id === notification.id
-          ? { ...notification, read: true }
-          : notification
+      setNotifications(prevNotifications => prevNotifications.map(n =>
+        n.id === notification.id
+          ? { ...n, read: true }
+          : n
       ));
     } catch (err) {
       console.error('Failed to mark notification as read', err);
