@@ -61,8 +61,17 @@ const OrdersDashboard = () => {
       </div>
 
       <div className='mb-6 flex flex-wrap gap-4'>
-        <FilterSelect filters={filters} handleFiltersChange={handleFiltersChange} />
-        <SortSelect filters={filters} handleFiltersChange={handleFiltersChange} />
+        <select value={filters.status} onChange={handleFiltersChange} name='status' className='px-4 py-2 border border-gray-300 rounded-md'>
+          <option value='all'>All Orders</option>
+          <option value='completed'>Completed</option>
+          <option value='processing'>Processing</option>
+          <option value='shipped'>Shipped</option>
+        </select>
+
+        <select value={filters.sortBy} onChange={handleFiltersChange} name='sortBy' className='px-4 py-2 border border-gray-300 rounded-md'>
+          <option value='date'>Sort by Date</option>
+          <option value='total'>Sort by Total</option>
+        </select>
       </div>
 
       {loading && (
@@ -94,26 +103,6 @@ const OrdersDashboard = () => {
         </div>
       )}
     </div>
-  )
-}
-
-const FilterSelect = ({ filters, handleFiltersChange }) => {
-  return (
-    <select value={filters.status} onChange={handleFiltersChange} name='status' className='px-4 py-2 border border-gray-300 rounded-md'>
-      <option value='all'>All Orders</option>
-      <option value='completed'>Completed</option>
-      <option value='processing'>Processing</option>
-      <option value='shipped'>Shipped</option>
-    </select>
-  )
-}
-
-const SortSelect = ({ filters, handleFiltersChange }) => {
-  return (
-    <select value={filters.sortBy} onChange={handleFiltersChange} name='sortBy' className='px-4 py-2 border border-gray-300 rounded-md'>
-      <option value='date'>Sort by Date</option>
-      <option value='total'>Sort by Total</option>
-    </select>
   )
 }
 
