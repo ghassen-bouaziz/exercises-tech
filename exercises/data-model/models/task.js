@@ -9,9 +9,10 @@ const taskSchema = new mongoose.Schema({
         default: 'todo'
     },
     createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        user_id: String,
+        name: String,
+        email: String,
+        avatar: String
     },
     priority: {
         type: String,

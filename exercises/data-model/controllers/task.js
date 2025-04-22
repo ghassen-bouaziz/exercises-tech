@@ -6,7 +6,6 @@ const AssignementModel = require('../models/assignement');
 const CommentModel = require('../models/comment');
 const { ERROR_CODES } = require('../utils');
 
-
 // Create a new task
 router.post('/', async (req, res) => {
     try {
@@ -30,9 +29,10 @@ router.post('/', async (req, res) => {
                 avatar: user.avatar
             }
         });
+        const result = await task.save();
 
-        await task.save();
-        res.status(201).json({ ok: true, data: task });
+        if (!result) return res.status(400).json({ ok: false, error: ERROR_CODES.FAILED_TO_CREATE_TASK });
+        res.status(201).json({ ok: true, data: result });
     } catch (error) {
         res.status(500).json({ ok: false, error: error.message || ERROR_CODES.FAILED_TO_CREATE_TASK });
     }
@@ -53,8 +53,9 @@ router.post('/assign', async (req, res) => {
             user: user_id
         })
 
-        await assignement.save();
-        res.status(200).json({ ok: true, data: assignement });
+        const result = await assignement.save();
+        if (!result) return res.status(400).json({ ok: false, error: ERROR_CODES.FAILED_TO_ASSIGN_TASK });
+        res.status(200).json({ ok: true, data: result });
     } catch (error) {
         res.status(500).json({ ok: false, error: error.message || ERROR_CODES.FAILED_TO_ASSIGN_TASK });
     }
@@ -64,7 +65,6 @@ router.post('/assign', async (req, res) => {
 router.post('/comments', async (req, res) => {
     try {
         const { text, user_id, task_id } = req.body;
-
         const task = await TaskModel.findById(task_id);
         if (!task) return res.status(404).json({ ok: false, error: ERROR_CODES.TASK_NOT_FOUND });
 
@@ -79,8 +79,9 @@ router.post('/comments', async (req, res) => {
             user_avatar: user.avatar
         });
 
-        await comment.save();
-        res.status(201).json({ ok: true, data: comment });
+        const result = await comment.save();
+        if (!result) return res.status(400).json({ ok: false, error: ERROR_CODES.FAILED_TO_ADD_COMMENT });
+        res.status(201).json({ ok: true, data: result });
     } catch (error) {
         res.status(500).json({ ok: false, error: error.message || ERROR_CODES.FAILED_TO_ADD_COMMENT });
     }
