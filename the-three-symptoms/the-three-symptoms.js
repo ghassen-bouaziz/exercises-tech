@@ -145,7 +145,7 @@ const ProductSearch = ({
 
       <div className="flex justify-center mt-8">
         <button
-          onClick={() => handleFilterChange({ target: { name: 'page', value: filters.page - 1 } })}
+          onClick={() => setFilters({ ...filters, page: filters.page - 1 })}
           disabled={filters.page === 1}
           className="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
         >
@@ -155,7 +155,7 @@ const ProductSearch = ({
           Page {filters.page}
         </span>
         <button
-          onClick={() => handleFilterChange({ target: { name: 'page', value: filters.page + 1 } })}
+          onClick={() => setFilters({ ...filters, page: filters.page + 1 })}
           className="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded-md"
         >
           Next
